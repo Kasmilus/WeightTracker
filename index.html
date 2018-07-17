@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <title>JS Weight Tracker</title>
+    <body onload="fetchRecords()">
+        <div class="container">
+            <h1>JS Weight Tracker <small>by Kamil :)</small></h1>
+        <div class="jumbotron">
+            <h3>Add new record:</h3>
+            <form id="recordInputForm">
+                <div class="form-group">
+                    <label for="recordDescInput">Description</label>
+                    <input type="text" class="form-control" id="recordDescInput" placeholder="Describe the record">
+                </div>
+                <div class="form-group">
+                    <label for="recordDaytimeInput">Time of the day</label>
+                    <select id="recordDaytimeInput" class="form-control">
+                        <option value="Morning">Morning</option>
+                        <option value="Afternoon">Afternoon</option>
+                        <option value="Evening">Evening</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="recordWeightInput">Weight</label>
+                    <input type="number" class="form-control" id="recordWeightInput" placeholder="Weight in kg">
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        <div class="col-lg-12">
+            <div id="recordsList">
+            </div>
+        </div>
+        <div class="footer">
+            <p>&copy Kamil made it, yay! :)</p>
+        </div>
+        </div>
+        
+        <!-- Chance.js-->
+        <script src="http://chancejs.com/chance.min.js"></script>
+
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+        <script src="main.js"></script>
+    </body>
+</html>
