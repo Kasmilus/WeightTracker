@@ -11,23 +11,24 @@ function clearAlert(){
 }
 
 function saveRecord(e){
-    var recordUser = document.getElementById('recordDaytimeInput').value;
-    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordUser = document.getElementById('recordUserInput').value;
+    var recordDate = document.getElementById('recordDateInput').value;
     var recordDaytime = document.getElementById('recordDaytimeInput').value;
     
     var recordWeight = document.getElementById('recordWeightInput').value;
-    var recordDaytime = document.getElementById('recordDaytimeInput').value;
-    var recordDaytime = document.getElementById('recordDaytimeInput').value;
-    var recordDaytime = document.getElementById('recordDaytimeInput').value;
-    var recordDaytime = document.getElementById('recordDaytimeInput').value;
-    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordShoulders = document.getElementById('recordShoulderInput').value;
+    var recordChest = document.getElementById('recordChestInput').value;
+    var recordWaist = document.getElementById('recordWaistInput').value;
+    var recordHips = document.getElementById('recordHipsInput').value;
+    var recordThigh = document.getElementById('recordThighInput').value;
+    var recordBiceps = document.getElementById('recordBicepsInput').value;
     var recordDesc = document.getElementById('recordDescInput').value;
 
     var recordId = chance.guid();
-    var recordStatus = 'Open';
+    var recordStatus = 'Neutral';
 
     // Check if all required fields are filled
-    if(recordWeight == 0 || ){
+    if(recordWeight == 0 || recordWaist == 0 || recordBiceps == 0 || recordChest == 0 || recordHips == 0 || recordShoulders == 0 || recordThigh == 0 || typeof recordDaytime == 'undefined'){
         showAlert("You need to fill all required fields(*)")
         return;
     }
@@ -37,10 +38,18 @@ function saveRecord(e){
 
     var record = {
         id: recordId,
-        description: recordDesc,
+        user: recordUser,
+        date: recordDate,
         daytime: recordDaytime,
         weight: recordWeight,
-        status: recordStatus
+        shoulders: recordShoulders,
+        chest: recordChest,
+        waist: recordWaist,
+        hips: recordHips,
+        thigh: recordThigh,
+        biceps: recordBiceps,
+        status: recordStatus,
+        description: recordDesc
     }
 
     if(localStorage.getItem('records') == null) {
@@ -60,12 +69,15 @@ function saveRecord(e){
     e.preventDefault();
 }
 
-function setStatusClosed(id){
+function changeStatus(id){
     var records = JSON.parse(localStorage.getItem('records'));
 
     for(var i = 0; i<records.length; i++){
         if(records[i].id = id){
-            records[i].status = 'Closed';
+            if(records[i].status != 'Happy')
+                records[i].status = 'Happy';
+            else
+                records[i].status = 'Sad';
         }
     }
 
@@ -82,7 +94,6 @@ function deleteRecord(id){
             records.splice(i, 1);
         }
     }
-    //records[id].status = 'Closed';
 
     localStorage.setItem('records', JSON.stringify(records));
 
@@ -97,19 +108,42 @@ function fetchRecords() {
 
     for(var i = 0; i < records.length; i++){
         var id = records[i].id;
-        var desc = records[i].description;
+        var user = records[i].user;
+        var date = records[i].date;
         var daytime = records[i].daytime;
         var weight = records[i].weight;
+        var shoulders = records[i].shoulders;
+        var chest = records[i].chest;
+        var waist = records[i].waist;
+        var hips = records[i].hips;
+        var thigh = records[i].thigh;
+        var biceps = records[i].biceps;
         var status = records[i].status;
+        var desc = records[i].description;
 
         recordsList.innerHTML += '<div class="card card-body">'+
-                                '<h9><small>Record ID: <i>' + id + '</i></small></h9>' +
-                                '<p><span class="badge badge-info">'+ status + '</span></p>'+
-                                '<h3>' + desc + '</h3>' +
+                                '<h6><small>Record ID: <i>' + id + '</i></small></h6>' +
+                                '<p><span class="badge badge-info">'+ 'Happiness level: ' + status + '</span></p>'+
+                                '<h2><strong>' + user + '</strong> - <small>' + date + '</small></h2>' +
+                                '<h4>' + desc + '</h4>' +
+                                '<p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">' +
+                                'Show Measurements' +
+                                '</button></p>' +
+                                '<div class="collapse" id="collapseExample">' +
+                                '<div class="card card-body">' +
                                 '<p><span class="fas fa-stopwatch"></span> ' + daytime + '</p>' +
-                                '<p><span class="fa fa-user"></span> ' + weight +  'kg</p>' +
-                                '<a href="#" onclick="setStatusClosed(\'' + id + '\')" class="btn btn-warning">Close</a>' +
-                                '<a href="#" onclick="deleteRecord(\'' + id + '\')" class="btn btn-danger">Delete</a>' +
+                                '<p><span class="fa fa-user"></span> ' + weight +  'cm</p>' +
+                                'Weight: ' + weight + 'kg<br>' +
+                                'Shoulders: ' + shoulders + 'cm<br>' +
+                                'Chest: ' + chest + 'cm<br>' +
+                                'Waist: ' + waist + 'cm<br>' +
+                                'Hips: ' + hips + 'cm<br>' +
+                                'Thigh: ' + thigh + 'cm<br>' +
+                                'Biceps: ' + biceps + 'cm<br>' +
+                                '<br><a href="#" onclick="changeStatus(\'' + id + '\')" class="btn btn-warning">Change status</a>' +
+                                '<br><a href="#" onclick="deleteRecord(\'' + id + '\')" class="btn btn-danger">Delete</a>' +
+                                '</div>' +
+                                '</div>' +
                                 '</div>';
     }
 }
