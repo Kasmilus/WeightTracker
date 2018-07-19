@@ -1,11 +1,39 @@
 document.getElementById('recordInputForm').addEventListener('submit', saveRecord);
 
+function showAlert(x){
+    document.getElementById('errorMessage').innerHTML = 
+    '<div class="alert alert-danger" role="alert">' +
+    '<strong> Oi, oi!</strong> <hr>' + x +'!' +
+    '</div>';
+}
+function clearAlert(){
+    document.getElementById('errorMessage').innerHTML = '';
+}
+
 function saveRecord(e){
-    var recordDesc = document.getElementById('recordDescInput').value;
+    var recordUser = document.getElementById('recordDaytimeInput').value;
     var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    
     var recordWeight = document.getElementById('recordWeightInput').value;
+    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordDaytime = document.getElementById('recordDaytimeInput').value;
+    var recordDesc = document.getElementById('recordDescInput').value;
+
     var recordId = chance.guid();
     var recordStatus = 'Open';
+
+    // Check if all required fields are filled
+    if(recordWeight == 0 || ){
+        showAlert("You need to fill all required fields(*)")
+        return;
+    }
+    else{
+        clearAlert();
+    }
 
     var record = {
         id: recordId,

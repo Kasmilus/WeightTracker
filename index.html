@@ -10,15 +10,29 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <title>JS Weight Tracker</title>
+    
     <body onload="fetchRecords()">
         <div class="container">
             <h1>JS Weight Tracker <small>by Kamil :)</small></h1>
+        <!-- Error -->
+        <div class="col-lg-12">
+            <div id="errorMessage">
+            </div>
+        </div>
+        <!-- Form -->
         <div class="jumbotron">
             <h3>Add new record:</h3>
             <form id="recordInputForm">
                 <div class="form-group">
-                    <label for="recordDescInput">Description</label>
-                    <input type="text" class="form-control" id="recordDescInput" placeholder="Describe the record">
+                    <label for="recordUserInput">User</label>
+                    <select id="recordUserInput" class="form-control">
+                        <option value="Kamil">Kamil</option>
+                        <option value="Klaudia">Klaudia</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="recordDateInput">Date<sup><font color="red">*</font></sup></label>
+                    <input type="date" class="form-control" id="recordDateInput">
                 </div>
                 <div class="form-group">
                     <label for="recordDaytimeInput">Time of the day</label>
@@ -29,16 +43,46 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="recordWeightInput">Weight</label>
+                    <label for="recordWeightInput">Weight<sup><font color="red">*</font></sup></label>
                     <input type="number" class="form-control" id="recordWeightInput" placeholder="Weight in kg">
                 </div>
+                <div class="form-group">
+                    <label for="recordShoulderInput">Shoulders<sup><font color="red">*</font></sup></label>
+                    <input type="number" class="form-control" id="recordShoulderInput" placeholder="Width in cm">
+                </div>
+                <div class="form-group">
+                    <label for="recordChestInput">Chest<sup><font color="red">*</font></sup></label>
+                    <input type="number" class="form-control" id="recordChestInput" placeholder="in cm">
+                </div>
+                <div class="form-group">
+                    <label for="recordWaistInput">Waist<sup><font color="red">*</font></sup></label>
+                    <input type="number" class="form-control" id="recordWaistInput" placeholder="in cm">
+                </div>
+                <div class="form-group">
+                    <label for="recordHipsInput">Hips<sup><font color="red">*</font></sup></label>
+                    <input type="number" class="form-control" id="recordHipsInput" placeholder="in cm">
+                </div>
+                <div class="form-group">
+                    <label for="recordThighInput">Thigh<sup><font color="red">*</font></sup></label>
+                    <input type="number" class="form-control" id="recordThighInput" placeholder="in cm">
+                </div>
+                <div class="form-group">
+                    <label for="recordBicepsInput">Biceps<sup><font color="red">*</font></sup></label>
+                    <input type="number" class="form-control" id="recordBicepsInput" placeholder="in cm">
+                </div>
+                <div class="form-group">
+                        <label for="recordDescInput">Description</label>
+                        <input type="text" class="form-control" id="recordDescInput" placeholder="Additional notes">
+                    </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>
+        <!-- Records list -->
         <div class="col-lg-12">
             <div id="recordsList">
             </div>
         </div>
+        <!-- Footer -->
         <div class="footer">
             <p>&copy Kamil made it, yay! :)</p>
         </div>
