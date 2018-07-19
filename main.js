@@ -132,18 +132,65 @@ function fetchRecords() {
                                 '<div class="collapse" id="collapseExample">' +
                                 '<div class="card card-body">' +
                                 '<p><span class="fas fa-stopwatch"></span> ' + daytime + '</p>' +
-                                '<p><span class="fa fa-user"></span> ' + weight +  'cm</p>' +
-                                'Weight: ' + weight + 'kg<br>' +
-                                'Shoulders: ' + shoulders + 'cm<br>' +
-                                'Chest: ' + chest + 'cm<br>' +
-                                'Waist: ' + waist + 'cm<br>' +
-                                'Hips: ' + hips + 'cm<br>' +
-                                'Thigh: ' + thigh + 'cm<br>' +
-                                'Biceps: ' + biceps + 'cm<br>' +
-                                '<br><a href="#" onclick="changeStatus(\'' + id + '\')" class="btn btn-warning">Change status</a>' +
+                                '<p><span class="fa fa-user"></span> Measurements: </p>' +
+                                '<ul class="list-group">' +
+                                '<li class="list-group-item">Weight: ' + weight + 'kg<span class="badge">test</span></li>' +
+                                '<li class="list-group-item">Shoulders: ' + shoulders + 'cm</li>' +
+                                '<li class="list-group-item">Chest: ' + chest + 'cm</li>' +
+                                '<li class="list-group-item">Waist: ' + waist + 'cm</li>' +
+                                '<li class="list-group-item">Hips: ' + hips + 'cm</li>' +
+                                '<li class="list-group-item">Thigh: ' + thigh + 'cm</li>' +
+                                '<li class="list-group-item">Biceps: ' + biceps + 'cm</li>' +
+                                '</ul>' +
+                                '<br><br><a href="#" onclick="changeStatus(\'' + id + '\')" class="btn btn-warning">Change status</a>' +
                                 '<br><a href="#" onclick="deleteRecord(\'' + id + '\')" class="btn btn-danger">Delete</a>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>';
     }
+
+    var chartData;
+
+    createChart(chartData);
+
+}
+
+function createChart(data){
+    var data = {
+        labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
+        series: [
+          [5, 4, 3, 7, 5, 10],
+          [3, 2, 9, 5, 4, 6],
+          [2, 1, -3, -4, -2, 0]
+        ]
+      };
+      
+      // We are setting a few options for our chart and override the defaults
+      var options = {
+        // Don't draw the line chart points
+        showPoint: false,
+        // Disable line smoothing
+        lineSmooth: false,
+        // X-Axis specific configuration
+        axisX: {
+          // We can disable the grid for this axis
+          showGrid: false,
+          // and also don't show the label
+          showLabel: false
+        },
+        // Y-Axis specific configuration
+        axisY: {
+          // Lets offset the chart a bit from the labels
+          offset: 60,
+          // The label interpolation function enables you to modify the values
+          // used for the labels on each axis. Here we are converting the
+          // values into million pound.
+          labelInterpolationFnc: function(value) {
+            return '$' + value + 'm';
+          }
+        }
+      };
+      
+      // All you need to do is pass your configuration as third parameter to the chart function
+      new Chartist.Line('.ct-chart', data, options);
 }
