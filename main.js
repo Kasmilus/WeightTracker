@@ -107,6 +107,7 @@ function fetchRecords() {
     recordsList.innerHTML = '';
 
     for(var i = 0; i < records.length; i++){
+        // Get variables for this record
         var id = records[i].id;
         var user = records[i].user;
         var date = records[i].date;
@@ -121,15 +122,22 @@ function fetchRecords() {
         var status = records[i].status;
         var desc = records[i].description;
 
+        // Calculate BMI
+        // !!! Store user data in some seperate variable later on - e.g. make user registration form !!!
+        var height = 187;
+        if(user == "Klaudia")
+            height = 160;
+        var bmiMessage = getBMI(weight, height);
+        
         recordsList.innerHTML += '<div class="card card-body">'+
                                 '<h6><small>Record ID: <i>' + id + '</i></small></h6>' +
                                 '<p><span class="badge badge-info">'+ 'Happiness level: ' + status + '</span></p>'+
                                 '<h2><strong>' + user + '</strong> - <small>' + date + '</small></h2>' +
                                 '<h4>' + desc + '</h4>' +
-                                '<p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">' +
+                                '<p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseMeasurements' + id + '" aria-expanded="false" aria-controls="collapseMeasurements' + id + '">' +
                                 'Show Measurements' +
                                 '</button></p>' +
-                                '<div class="collapse" id="collapseExample">' +
+                                '<div class="collapse" id="collapseMeasurements' + id + '">' +
                                 '<div class="card card-body">' +
                                 '<p><span class="fas fa-stopwatch"></span> ' + daytime + '</p>' +
                                 '<p><span class="fa fa-user"></span> Measurements: </p>' +
@@ -141,6 +149,7 @@ function fetchRecords() {
                                 '<li class="list-group-item">Hips: ' + hips + 'cm</li>' +
                                 '<li class="list-group-item">Thigh: ' + thigh + 'cm</li>' +
                                 '<li class="list-group-item">Biceps: ' + biceps + 'cm</li>' +
+                                '<li class="list-group-item">' + bmiMessage + '</li>' +
                                 '</ul>' +
                                 '<br><br><a href="#" onclick="changeStatus(\'' + id + '\')" class="btn btn-warning">Change status</a>' +
                                 '<br><a href="#" onclick="deleteRecord(\'' + id + '\')" class="btn btn-danger">Delete</a>' +
@@ -193,4 +202,26 @@ function createChart(data){
       
       // All you need to do is pass your configuration as third parameter to the chart function
       new Chartist.Line('.ct-chart', data, options);
+}
+
+function getBMI(weight, heightInCm){
+    var heightInM = heightInCm/100.0;
+    var bmi = weight/(heightInM*heightInM);
+
+    var result = 'Current BMI: ' + bmi.toFixed(2) + ' - ';
+    
+    if(bmi < 18.5){
+        result += 'Underweight';
+    }
+    else if(bmi < 24.9){
+        result += 'Normal weight';
+    }
+    else if(bmi < 29.9){
+        result += 'Overweight';
+    }
+    else {
+        result += 'Obese';
+    }
+
+    return result;
 }
