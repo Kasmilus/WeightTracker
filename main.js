@@ -104,6 +104,23 @@ function fetchRecords() {
     var records = JSON.parse(localStorage.getItem('records'));
     var recordsList = document.getElementById('recordsList');
 
+    var req = new XMLHttpRequest();
+    req.overrideMimeType("application/json");
+    req.open('GET', 'quotes.json', true);
+    req.onload  = function() {
+        var jsonResponse = JSON.parse(req.responseText);
+        //var randomNumber = chance.integer({ min: 0, max: jsonResponse.length })
+        // Text
+        var textElement = document.getElementById('quoteText');
+        textElement.innerHTML = jsonResponse[0].text;
+        //Author
+        var authorElement = document.getElementById('quoteAuthor');
+        authorElement.innerHTML = jsonResponse[0].author;
+        
+    };
+    req.send(null);
+    
+
     recordsList.innerHTML = '';
 
     for(var i = 0; i < records.length; i++){
