@@ -109,13 +109,13 @@ function fetchRecords() {
     req.open('GET', 'quotes.json', true);
     req.onload  = function() {
         var jsonResponse = JSON.parse(req.responseText);
-        //var randomNumber = chance.integer({ min: 0, max: jsonResponse.length })
+        var randomNumber = chance.integer({ min: 0, max: (jsonResponse.length) })
         // Text
         var textElement = document.getElementById('quoteText');
-        textElement.innerHTML = jsonResponse[0].text;
+        textElement.innerHTML = jsonResponse[randomNumber].text;
         //Author
         var authorElement = document.getElementById('quoteAuthor');
-        authorElement.innerHTML = jsonResponse[0].author;
+        authorElement.innerHTML = jsonResponse[randomNumber].author;
         
     };
     req.send(null);
