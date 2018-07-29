@@ -104,12 +104,13 @@ function fetchRecords() {
     var records = JSON.parse(localStorage.getItem('records'));
     var recordsList = document.getElementById('recordsList');
 
+    // Get quote - later move it somewhere
     var req = new XMLHttpRequest();
     req.overrideMimeType("application/json");
     req.open('GET', 'quotes.json', true);
     req.onload  = function() {
         var jsonResponse = JSON.parse(req.responseText);
-        var randomNumber = chance.integer({ min: 0, max: (jsonResponse.length) })
+        var randomNumber = chance.integer({ min: 0, max: (jsonResponse.length-1) })
         // Text
         var textElement = document.getElementById('quoteText');
         textElement.innerHTML = jsonResponse[randomNumber].text;
@@ -122,6 +123,8 @@ function fetchRecords() {
     
 
     recordsList.innerHTML = '';
+    
+    var chartData = [[],[], []];
 
     for(var i = 0; i < records.length; i++){
         // Get variables for this record
@@ -138,6 +141,19 @@ function fetchRecords() {
         var biceps = records[i].biceps;
         var status = records[i].status;
         var desc = records[i].description;
+
+        // Add to chart data array
+        if(user == 'Kamil'){
+            chartData[0].push(weight);
+            chartData[0].push(weight);
+            chartData[0].push(weight);
+        }
+        else{
+            chartData[2].push(weight);
+            chartData[2].push(weight);
+            chartData[2].push(weight);
+        }
+        
 
         // Calculate BMI
         // !!! Store user data in some seperate variable later on - e.g. make user registration form !!!
@@ -175,50 +191,63 @@ function fetchRecords() {
                                 '</div>';
     }
 
-    var chartData;
-
     createChart(chartData);
-
+    createPieChart(chartData);
 }
 
-function createChart(data){
+function createChart(chartData){
     var data = {
-        labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
-        series: [
-          [5, 4, 3, 7, 5, 10],
-          [3, 2, 9, 5, 4, 6],
-          [2, 1, -3, -4, -2, 0]
-        ]
+        labels: ['Empty'],
+        series: chartData
       };
       
       // We are setting a few options for our chart and override the defaults
       var options = {
-        // Don't draw the line chart points
-        showPoint: false,
-        // Disable line smoothing
-        lineSmooth: false,
+        showPoint: true,
+        lineSmooth: true,
         // X-Axis specific configuration
         axisX: {
-          // We can disable the grid for this axis
           showGrid: false,
-          // and also don't show the label
           showLabel: false
         },
         // Y-Axis specific configuration
         axisY: {
           // Lets offset the chart a bit from the labels
           offset: 60,
+          scaleMinSpace: 25,
+          onlyInteger: true,
           // The label interpolation function enables you to modify the values
           // used for the labels on each axis. Here we are converting the
           // values into million pound.
           labelInterpolationFnc: function(value) {
-            return '$' + value + 'm';
+            return value + 'kg';
           }
         }
       };
       
       // All you need to do is pass your configuration as third parameter to the chart function
-      new Chartist.Line('.ct-chart', data, options);
+      new Chartist.Line('#chartMain', data, options);
+}
+
+function createPieChart(chartData){
+    var data = {
+        labels: ['Kamil', ' ','Klaudia'],
+        series: [chartData[0].length,0, chartData[2].length]
+      };
+      
+      var options = {
+        donut: true,
+        donutWidth: 50,
+        startAngle: 270,
+        total: (chartData[0].length+chartData[2].length)*2,
+        width: '360px',
+        height: '280px',
+        labelInterpolationFnc: function(value) {
+          return value;
+        }
+      };
+      
+      new Chartist.Pie('#chartSecondary', data, options);
 }
 
 function getBMI(weight, heightInCm){
