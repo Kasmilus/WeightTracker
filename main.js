@@ -126,73 +126,88 @@ function fetchRecords() {
     
     var chartData = [[],[], []];
 
-    for(var i = 0; i < records.length; i++){
-        // Get variables for this record
-        var id = records[i].id;
-        var user = records[i].user;
-        var date = records[i].date;
-        var daytime = records[i].daytime;
-        var weight = records[i].weight;
-        var shoulders = records[i].shoulders;
-        var chest = records[i].chest;
-        var waist = records[i].waist;
-        var hips = records[i].hips;
-        var thigh = records[i].thigh;
-        var biceps = records[i].biceps;
-        var status = records[i].status;
-        var desc = records[i].description;
+    if(records == null || records.length == 0){
+        recordsList.innerHTML =
+        '<br>' +
+        '<div class="alert alert-danger" role="alert">' +
+        '<strong> Oi, oi!</strong> No records to show!!' +
+        '</div>';
 
-        // Add to chart data array
-        if(user == 'Kamil'){
-            chartData[0].push(weight);
-            chartData[0].push(weight);
-            chartData[0].push(weight);
-        }
-        else{
-            chartData[2].push(weight);
-            chartData[2].push(weight);
-            chartData[2].push(weight);
-        }
-        
-
-        // Calculate BMI
-        // !!! Store user data in some seperate variable later on - e.g. make user registration form !!!
-        var height = 187;
-        if(user == "Klaudia")
-            height = 160;
-        var bmiMessage = getBMI(weight, height);
-        
-        recordsList.innerHTML += '<div class="card card-body">'+
-                                '<h6><small>Record ID: <i>' + id + '</i></small></h6>' +
-                                '<p><span class="badge badge-info">'+ 'Happiness level: ' + status + '</span></p>'+
-                                '<h2><strong>' + user + '</strong> - <small>' + date + '</small></h2>' +
-                                '<h4>' + desc + '</h4>' +
-                                '<p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseMeasurements' + id + '" aria-expanded="false" aria-controls="collapseMeasurements' + id + '">' +
-                                'Show Measurements' +
-                                '</button></p>' +
-                                '<div class="collapse" id="collapseMeasurements' + id + '">' +
-                                '<div class="card card-body">' +
-                                '<p><span class="fas fa-stopwatch"></span> ' + daytime + '</p>' +
-                                '<p><span class="fa fa-user"></span> Measurements: </p>' +
-                                '<ul class="list-group">' +
-                                '<li class="list-group-item">Weight: ' + weight + 'kg<span class="badge">test</span></li>' +
-                                '<li class="list-group-item">Shoulders: ' + shoulders + 'cm</li>' +
-                                '<li class="list-group-item">Chest: ' + chest + 'cm</li>' +
-                                '<li class="list-group-item">Waist: ' + waist + 'cm</li>' +
-                                '<li class="list-group-item">Hips: ' + hips + 'cm</li>' +
-                                '<li class="list-group-item">Thigh: ' + thigh + 'cm</li>' +
-                                '<li class="list-group-item">Biceps: ' + biceps + 'cm</li>' +
-                                '<li class="list-group-item">' + bmiMessage + '</li>' +
-                                '</ul>' +
-                                '<br><br><a href="#" onclick="changeStatus(\'' + id + '\')" class="btn btn-warning">Change status</a>' +
-                                '<br><a href="#" onclick="deleteRecord(\'' + id + '\')" class="btn btn-danger">Delete</a>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>';
+        var chartSection = document.getElementById('chartMain');
+        chartSection.innerHTML = 
+        '<div class="alert alert-danger" role="alert">' +
+        '<strong> Oi, oi! </strong> Not enough data to show the chart!' +
+        '</div>';
     }
+    else{
+        for(var i = 0; i < records.length; i++){
+            // Get variables for this record
+            var id = records[i].id;
+            var user = records[i].user;
+            var date = records[i].date;
+            var daytime = records[i].daytime;
+            var weight = records[i].weight;
+            var shoulders = records[i].shoulders;
+            var chest = records[i].chest;
+            var waist = records[i].waist;
+            var hips = records[i].hips;
+            var thigh = records[i].thigh;
+            var biceps = records[i].biceps;
+            var status = records[i].status;
+            var desc = records[i].description;
 
-    createChart(chartData);
-    createPieChart(chartData);
+            // Add to chart data array
+            if(user == 'Kamil'){
+                chartData[0].push(weight);
+                chartData[0].push(weight);
+                chartData[0].push(weight);
+            }
+            else{
+                chartData[2].push(weight);
+                chartData[2].push(weight);
+                chartData[2].push(weight);
+            }
+            
+
+            // Calculate BMI
+            // !!! Store user data in some seperate variable later on - e.g. make user registration form !!!
+            var height = 187;
+            if(user == "Klaudia")
+                height = 160;
+            var bmiMessage = getBMI(weight, height);
+            
+            recordsList.innerHTML += '<div class="card card-body">'+
+                                    '<h6><small>Record ID: <i>' + id + '</i></small></h6>' +
+                                    '<p><span class="badge badge-info">'+ 'Happiness level: ' + status + '</span></p>'+
+                                    '<h2><strong>' + user + '</strong> - <small>' + date + '</small></h2>' +
+                                    '<h4>' + desc + '</h4>' +
+                                    '<p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseMeasurements' + id + '" aria-expanded="false" aria-controls="collapseMeasurements' + id + '">' +
+                                    'Show Measurements' +
+                                    '</button></p>' +
+                                    '<div class="collapse" id="collapseMeasurements' + id + '">' +
+                                    '<div class="card card-body">' +
+                                    '<p><span class="fas fa-stopwatch"></span> ' + daytime + '</p>' +
+                                    '<p><span class="fa fa-user"></span> Measurements: </p>' +
+                                    '<ul class="list-group">' +
+                                    '<li class="list-group-item">Weight: ' + weight + 'kg<span class="badge">test</span></li>' +
+                                    '<li class="list-group-item">Shoulders: ' + shoulders + 'cm</li>' +
+                                    '<li class="list-group-item">Chest: ' + chest + 'cm</li>' +
+                                    '<li class="list-group-item">Waist: ' + waist + 'cm</li>' +
+                                    '<li class="list-group-item">Hips: ' + hips + 'cm</li>' +
+                                    '<li class="list-group-item">Thigh: ' + thigh + 'cm</li>' +
+                                    '<li class="list-group-item">Biceps: ' + biceps + 'cm</li>' +
+                                    '<li class="list-group-item">' + bmiMessage + '</li>' +
+                                    '</ul>' +
+                                    '<br><br><a href="#" onclick="changeStatus(\'' + id + '\')" class="btn btn-warning">Change status</a>' +
+                                    '<br><a href="#" onclick="deleteRecord(\'' + id + '\')" class="btn btn-danger">Delete</a>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>';
+        }
+
+        createChart(chartData);
+        createPieChart(chartData);
+    }
 }
 
 function createChart(chartData){

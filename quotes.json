@@ -1,17 +1,17 @@
 [
     {
-        "Book ID": "1",
-        "text": "Lody nie tucza",
+        "ID": "1",
+        "text": "Ice cream makes you lose weight",
         "author": "Klaudia"
     },
     {
-        "Book ID": "2",
-        "text": "Lody nie tucza dwa",
-        "author": "Klaudia"
+        "ID": "2",
+        "text": "One cookie a day, helps weight go away",
+        "author": "Kamil"
     },
     {
-        "Book ID": "3",
-        "text": "Mam w bagazniku lopate",
-        "author": "Klaudia"
+        "ID": "3",
+        "text": "Chocolate makes your clothes shrink",
+        "author": "Wise old chinese proverb"
     }
 ]
