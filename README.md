@@ -6,7 +6,7 @@ Just quick little project to learn how this webdev thing works :)
 https://kasmilus.github.io/WeightTracker/index.html
 
 ## Issues
-It needs some work. There are some hard coded parts, some little bugs.
+It is just a short project hosted on github pages so no database, users are hard coded.
 
 ## Credits
 I used [this](https://www.youtube.com/watch?v=NYq9J-Eur9U) tutorial as a starting point.

@@ -147,13 +147,8 @@ function deleteRecord(id){
     fetchRecords();
 }
 
-function fetchRecords() {
-    var records = JSON.parse(localStorage.getItem('records'));
-    var recordsList = document.getElementById('recordsList');
-    var chartSection = document.getElementById('chartMain');
-
-
-    // Get quote - later move it somewhere
+// Get random quote from JSON file
+function getQuote(){
     var req = new XMLHttpRequest();
     req.overrideMimeType("application/json");
     req.open('GET', 'quotes.json', true);
@@ -169,8 +164,16 @@ function fetchRecords() {
         
     };
     req.send(null);
-    
+}
 
+// Called on load!
+function fetchRecords() {
+    var records = JSON.parse(localStorage.getItem('records'));
+    var recordsList = document.getElementById('recordsList');
+    var chartSection = document.getElementById('chartMain');
+
+    getQuote();
+    
     recordsList.innerHTML = '';
     chartSection.innerHTML = '';
     
@@ -208,12 +211,8 @@ function fetchRecords() {
             // Add to chart data array
             if(user == 'Kamil'){
                 chartData[0].push(weight);
-                chartData[0].push(weight);
-                chartData[0].push(weight);
             }
             else{
-                chartData[2].push(weight);
-                chartData[2].push(weight);
                 chartData[2].push(weight);
             }
             
