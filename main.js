@@ -1,4 +1,4 @@
-document.getElementById('recordInputForm').addEventListener('submit', saveRecord);
+document.getElementById('recordInputForm').addEventListener('submit', saveRecordValues);
 
 function showAlert(x){
     document.getElementById('errorMessage').innerHTML = 
@@ -10,7 +10,23 @@ function clearAlert(){
     document.getElementById('errorMessage').innerHTML = '';
 }
 
-function saveRecord(e){
+function saveRecord(record){
+    // Create records variable if one doesn't exist
+    if(localStorage.getItem('records') == null) {
+        var records = [];
+        records.push(record);
+        localStorage.setItem('records', JSON.stringify(records));
+    } else {
+        var records = JSON.parse(localStorage.getItem('records'));
+        records.push(record);
+        localStorage.setItem('records', JSON.stringify(records));
+    }
+
+    fetchRecords();
+}
+
+function saveRecordValues(e){
+    // Get form values
     var recordUser = document.getElementById('recordUserInput').value;
     var recordDate = document.getElementById('recordDateInput').value;
     var recordDaytime = document.getElementById('recordDaytimeInput').value;
@@ -36,6 +52,7 @@ function saveRecord(e){
         clearAlert();
     }
 
+    // Create record variable
     var record = {
         id: recordId,
         user: recordUser,
@@ -51,20 +68,50 @@ function saveRecord(e){
         status: recordStatus,
         description: recordDesc
     }
-
-    if(localStorage.getItem('records') == null) {
-        var records = [];
-        records.push(record);
-        localStorage.setItem('records', JSON.stringify(records));
-    } else {
-        var records = JSON.parse(localStorage.getItem('records'));
-        records.push(record);
-        localStorage.setItem('records', JSON.stringify(records));
-    }
+    // Call function saving record
+    saveRecord(record);
 
     document.getElementById('recordInputForm').reset();
 
-    fetchRecords();
+    e.preventDefault();
+}
+
+function saveRecordRandom(e){
+    // Randomize values
+    var recordUser = 'Kamil';
+    if(chance.bool()) recordUser = 'Klaudia';
+    var recordDate = '';
+    var recordDaytime = 'Morning';
+    var recordWeight = chance.integer({min: 40, max: 160});
+    var recordShoulders = chance.integer({min: 30, max: 100});
+    var recordChest = chance.integer({min: 50, max: 200});
+    var recordWaist = chance.integer({min: 50, max: 200});
+    var recordHips = chance.integer({min: 40, max: 160});
+    var recordThigh = chance.integer({min: 40, max: 160});
+    var recordBiceps = chance.integer({min: 40, max: 160});
+    var recordDesc = '';
+
+    var recordId = chance.guid();
+    var recordStatus = 'Neutral';
+
+    // Create record variable
+    var record = {
+        id: recordId,
+        user: recordUser,
+        date: recordDate,
+        daytime: recordDaytime,
+        weight: recordWeight,
+        shoulders: recordShoulders,
+        chest: recordChest,
+        waist: recordWaist,
+        hips: recordHips,
+        thigh: recordThigh,
+        biceps: recordBiceps,
+        status: recordStatus,
+        description: recordDesc
+    }
+    // Call function saving record
+    saveRecord(record);
 
     e.preventDefault();
 }
@@ -103,6 +150,8 @@ function deleteRecord(id){
 function fetchRecords() {
     var records = JSON.parse(localStorage.getItem('records'));
     var recordsList = document.getElementById('recordsList');
+    var chartSection = document.getElementById('chartMain');
+
 
     // Get quote - later move it somewhere
     var req = new XMLHttpRequest();
@@ -123,6 +172,7 @@ function fetchRecords() {
     
 
     recordsList.innerHTML = '';
+    chartSection.innerHTML = '';
     
     var chartData = [[],[], []];
 
@@ -133,7 +183,6 @@ function fetchRecords() {
         '<strong> Oi, oi!</strong> No records to show!!' +
         '</div>';
 
-        var chartSection = document.getElementById('chartMain');
         chartSection.innerHTML = 
         '<div class="alert alert-danger" role="alert">' +
         '<strong> Oi, oi! </strong> Not enough data to show the chart!' +
